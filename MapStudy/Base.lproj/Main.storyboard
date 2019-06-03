@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkZ-uY-wwa">
-                                <rect key="frame" x="0.0" y="44" width="414" height="776"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="834"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26U-BR-Eya">
                                 <rect key="frame" x="0.0" y="44" width="414" height="70"/>
@@ -38,15 +38,15 @@
                                     <constraint firstAttribute="height" constant="70" id="OSY-tc-pcd"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BHc-sq-g2a">
-                                <rect key="frame" x="0.0" y="895" width="364" height="1"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHc-sq-g2a">
+                                <rect key="frame" x="0.0" y="895" width="414" height="1"/>
                                 <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="sfG-ev-5k9"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w3O-WX-NFY">
-                                <rect key="frame" x="364" y="812" width="50" height="50"/>
+                                <rect key="frame" x="364" y="825" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="2Ox-40-GWG"/>
                                     <constraint firstAttribute="height" constant="50" id="CDg-o7-9Nf"/>
@@ -59,22 +59,26 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="BHc-sq-g2a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="11w-g8-IOW"/>
-                            <constraint firstAttribute="bottom" secondItem="BHc-sq-g2a" secondAttribute="bottom" id="25c-pu-3B2"/>
+                            <constraint firstItem="BHc-sq-g2a" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="32x-qp-X0p"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KkZ-uY-wwa" secondAttribute="trailing" id="80H-hx-JE7"/>
                             <constraint firstItem="KkZ-uY-wwa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Ggg-kd-My9"/>
+                            <constraint firstAttribute="trailing" secondItem="BHc-sq-g2a" secondAttribute="trailing" id="J64-PZ-Q0W"/>
                             <constraint firstItem="26U-BR-Eya" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Lk0-0q-GDI"/>
                             <constraint firstItem="KkZ-uY-wwa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="N3r-yV-UVm"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KkZ-uY-wwa" secondAttribute="bottom" id="YKU-0u-h17"/>
+                            <constraint firstAttribute="bottom" secondItem="BHc-sq-g2a" secondAttribute="bottom" id="PM2-ST-uIJ"/>
+                            <constraint firstItem="BHc-sq-g2a" firstAttribute="top" secondItem="KkZ-uY-wwa" secondAttribute="bottom" id="VwQ-Nw-EaR"/>
+                            <constraint firstItem="w3O-WX-NFY" firstAttribute="bottom" secondItem="BHc-sq-g2a" secondAttribute="top" constant="-20" id="adu-Sp-df9"/>
                             <constraint firstItem="26U-BR-Eya" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aer-dU-fjP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="26U-BR-Eya" secondAttribute="trailing" id="hkr-mY-JzN"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="w3O-WX-NFY" secondAttribute="bottom" id="k2a-zM-iH7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BHc-sq-g2a" secondAttribute="bottom" constant="-34" id="k2a-zM-iH7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w3O-WX-NFY" secondAttribute="trailing" id="lEb-DP-2eH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="KkZ-uY-wwa" id="9Pj-5z-Mnr"/>
+                        <outlet property="upView" destination="BHc-sq-g2a" id="z3V-dH-xvB"/>
+                        <outlet property="upviewConstrain" destination="sfG-ev-5k9" id="Vcj-lB-rGo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
