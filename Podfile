@@ -7,6 +7,7 @@ target 'MapStudy' do
   # Pods for MapStudy
     pod 'Alamofire'
     pod 'AlamofireImage'
+    pod 'SwiftyJSON'
 
   target 'MapStudyTests' do
     inherit! :search_paths

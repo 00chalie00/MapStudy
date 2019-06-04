@@ -6,25 +6,12 @@
 //  Copyright © 2019 formathead. All rights reserved.
 // added Extension
 
-// 1. import Mapkit -> MapView outlet 생성 -> Mapview Delegate 설정 -> extension으로 MKMapviewDelegate 설정 (Class 외부에 설정)
-// 2. import CoreLocation -> CLLocationManager 객체 생성 -> locationManager Delegate 설정 -> extension으로 CLLocationManagerDelegate 설정 (Class 외부에 설정)
-// 3. 권한 관련하여 CLLOcationManager.authorizationStatus 객체 생성 -> CLLocationManagerDelegate에 생성한 authorizationStatus 객체가 .notDetermined auth request -> plist에 권한 관련 3가지 추가 (항상, 사용시, 거절)
-// 4. MKMapviewDelegate Extension에 User 위치를 중앙으로 설정하는 func 구현
-//    coordinate -> region -> mapView에 set
-// 5. viewDidLoad에 TapGesture 객체 추가 -> Tap Number 설정 -> mapview에 Gesture 추가 (double tap시 Func 추가)
-// 6. MKMapviewDelegate Extension에 doubletap func 구현
-//    User가 Tap한 위치의 Location(CGPoint) 값을 구한다. -> Location Data를 CLLocationCoordinate2D로 convert -> Annotation Class 구현
-// 7. Annotation 구현 (import UIKit, NSObject -> CLLocationCoordinate2D 변수 생성, identifier 변수 생성 -> init -> init 끝에 super.init())
-// 8. MKMapviewDelegate Extension의 doubletap func에서 Annotation 객체 생성 -> mapview에 set
-// 9. region -> center를 conver한 지점으로 생성 -> mapview에 set
-//10. 기존 Annotation func 구현
-//    for annotation in mapview.annotations로하는 for문 구현 ->mapview.removeannotation
-
-
-
 import UIKit
 import MapKit
 import CoreLocation
+import Alamofire
+import AlamofireImage
+import SwiftyJSON
 
 class MapVC: UIViewController {
 
@@ -43,6 +30,8 @@ class MapVC: UIViewController {
     
     var flowLayout = UICollectionViewFlowLayout()
     var collectionView: UICollectionView?
+    
+    var imageArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,6 +147,10 @@ extension MapVC: MKMapViewDelegate {
         
         let region = MKCoordinateRegion(center: convertCoordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         mapView.setRegion(region, animated: true)
+        
+        retrieveUrls(forAnnotation: annotation) { (true) in
+                print(self.imageArray)
+        }
     }
     
     func removePin() {
@@ -165,6 +158,21 @@ extension MapVC: MKMapViewDelegate {
             mapView.removeAnnotation(annotation)
         }
     }
+    
+    //지정된 Pin에 대한 Image의 URL로 Image Array 획득
+    func retrieveUrls(forAnnotation annotation: DroppablePin, completion: @escaping completionHandler) {
+        Alamofire.request(flickerUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 5)).responseJSON { (response) in
+            guard let json = response.result.value as? Dictionary<String, AnyObject> else { return }
+            let photosDict = json["photos"] as! Dictionary<String, AnyObject>
+            let photosDictArray = photosDict["photo"] as! [Dictionary<String, AnyObject>]
+            for photo in photosDictArray {
+                let postUrl = "https://live.staticflickr.com/\(photo["server"]!)/\(photo["id"]!)_\(photo["secret"]!)_b_h_k.jpg"
+                self.imageArray.append(postUrl)
+            }
+            completion(true)
+        }
+    }
+    
 }//End Of The Extension
 
 extension MapVC: CLLocationManagerDelegate {

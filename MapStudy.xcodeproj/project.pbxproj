@@ -17,6 +17,7 @@
 		21176CC9229FC35A009F10C1 /* MapStudyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21176CC8229FC35A009F10C1 /* MapStudyUITests.swift */; };
 		21176CDA22A0D58D009F10C1 /* DrappablePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21176CD922A0D58D009F10C1 /* DrappablePin.swift */; };
 		21176CDC22A4B122009F10C1 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21176CDB22A4B122009F10C1 /* PhotoCell.swift */; };
+		21176CDE22A4F520009F10C1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21176CDD22A4F520009F10C1 /* Constants.swift */; };
 		23E2CE00522D257A6B0B6E9A /* Pods_MapStudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186C562D82AD824B4B24C4E0 /* Pods_MapStudyTests.framework */; };
 		8FD1F8D5E7F501BE7D6570F6 /* Pods_MapStudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE9891909143AB918CAFEC4 /* Pods_MapStudyUITests.framework */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		21176CCA229FC35A009F10C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21176CD922A0D58D009F10C1 /* DrappablePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrappablePin.swift; sourceTree = "<group>"; };
 		21176CDB22A4B122009F10C1 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		21176CDD22A4F520009F10C1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3C656858AA663E3E1DE805C7 /* Pods-MapStudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapStudyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapStudyTests/Pods-MapStudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4ABEC336F561D07015083BAF /* Pods-MapStudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapStudyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MapStudyTests/Pods-MapStudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		597312808128498FE950F0EC /* Pods-MapStudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MapStudy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MapStudy/Pods-MapStudy.debug.xcconfig"; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		21176CD8229FC372009F10C1 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				21176CDD22A4F520009F10C1 /* Constants.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-MapStudy/Pods-MapStudy-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -344,6 +348,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -423,6 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21176CDE22A4F520009F10C1 /* Constants.swift in Sources */,
 				21176CDC22A4B122009F10C1 /* PhotoCell.swift in Sources */,
 				21176CDA22A0D58D009F10C1 /* DrappablePin.swift in Sources */,
 				21176CAB229FC359009F10C1 /* MapVC.swift in Sources */,
