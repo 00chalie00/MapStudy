@@ -69,6 +69,7 @@ class MapVC: UIViewController {
     }
     
     @objc func animateViewDown() {
+        cancelAllSession()
         upviewConstrain.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -102,6 +103,7 @@ class MapVC: UIViewController {
         progressLbl?.font = UIFont(name: "Avenir Next", size: 18)
         progressLbl?.textColor = UIColor.darkGray
         progressLbl?.textAlignment = .center
+        collectionView?.addSubview(progressLbl!)
     }
     
     func removeProgressLbl() {
@@ -134,6 +136,12 @@ extension MapVC: MKMapViewDelegate {
         removePin()
         removeSpinner()
         removeProgressLbl()
+        cancelAllSession()
+        
+        imageArray = []
+        imageDNArray = []
+        
+        collectionView?.reloadData()
         
         animateViewUp()
         addSwipe()
@@ -155,7 +163,7 @@ extension MapVC: MKMapViewDelegate {
                     if success {
                         self.removeSpinner()
                         self.removeProgressLbl()
-                        //reload CollectionView
+                        self.collectionView?.reloadData()
                     }
                 })
             }
@@ -170,15 +178,13 @@ extension MapVC: MKMapViewDelegate {
     
     //지정된 Pin에 대한 Image의 URL로 Image Array 획득
     func retrieveUrls(forAnnotation annotation: DroppablePin, completion: @escaping completionHandler) {
-        Alamofire.request(flickerUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 5)).responseJSON { (response) in
+        Alamofire.request(flickerUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 40)).responseJSON { (response) in
             guard let json = response.result.value as? Dictionary<String, AnyObject> else { return }
-            print(json)
             let photosDict = json["photos"] as! Dictionary<String, AnyObject>
             let photosDictArray = photosDict["photo"] as! [Dictionary<String, AnyObject>]
             for photo in photosDictArray {
                 let postUrl = "https://live.staticflickr.com/\(photo["server"]!)/\(photo["id"]!)_\(photo["secret"]!)_b.jpg"
                 self.imageArray.append(postUrl)
-                print(self.imageArray)
             }
             completion(true)
         }
@@ -199,6 +205,12 @@ extension MapVC: MKMapViewDelegate {
         }
     }
     
+    func cancelAllSession() {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
+            sessionDataTask.forEach({$0.cancel()})
+            downloadData.forEach({$0.cancel()})
+        }
+    }
 }//End Of The Extension
 
 extension MapVC: CLLocationManagerDelegate {
@@ -218,13 +230,16 @@ extension MapVC: CLLocationManagerDelegate {
 extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return self.imageArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell else {return UICollectionViewCell()}
+        let imageForIndex = imageDNArray[indexPath.row]
+        let imageView = UIImageView(image: imageForIndex)
+        cell.addSubview(imageView)
         
-        return cell!
+        return cell
     }
     
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotoCell: UICollectionViewCell {
+class PhotoCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
