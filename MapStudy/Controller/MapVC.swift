@@ -32,6 +32,7 @@ class MapVC: UIViewController {
     var collectionView: UICollectionView?
     
     var imageArray = [String]()
+    var imageDNArray = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,8 +149,16 @@ extension MapVC: MKMapViewDelegate {
         let region = MKCoordinateRegion(center: convertCoordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         mapView.setRegion(region, animated: true)
         
-        retrieveUrls(forAnnotation: annotation) { (true) in
-                print(self.imageArray)
+        retrieveUrls(forAnnotation: annotation) { (success) in
+            if success {
+                self.retrieveImage(completion: { (success) in
+                    if success {
+                        self.removeSpinner()
+                        self.removeProgressLbl()
+                        //reload CollectionView
+                    }
+                })
+            }
         }
     }
     
@@ -163,13 +172,30 @@ extension MapVC: MKMapViewDelegate {
     func retrieveUrls(forAnnotation annotation: DroppablePin, completion: @escaping completionHandler) {
         Alamofire.request(flickerUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 5)).responseJSON { (response) in
             guard let json = response.result.value as? Dictionary<String, AnyObject> else { return }
+            print(json)
             let photosDict = json["photos"] as! Dictionary<String, AnyObject>
             let photosDictArray = photosDict["photo"] as! [Dictionary<String, AnyObject>]
             for photo in photosDictArray {
-                let postUrl = "https://live.staticflickr.com/\(photo["server"]!)/\(photo["id"]!)_\(photo["secret"]!)_b_h_k.jpg"
+                let postUrl = "https://live.staticflickr.com/\(photo["server"]!)/\(photo["id"]!)_\(photo["secret"]!)_b.jpg"
                 self.imageArray.append(postUrl)
+                print(self.imageArray)
             }
             completion(true)
+        }
+    }
+    
+    func retrieveImage(completion: @escaping completionHandler) {
+        imageDNArray = []
+        
+        for url in imageArray {
+            Alamofire.request(url).responseImage(completionHandler: {(response) in
+                guard let image = response.result.value else { return }
+                self.imageDNArray.append(image)
+                self.progressLbl?.text = "\(self.imageDNArray.count)/40 IMAGES DOWNLOADED"
+                if self.imageDNArray.count == self.imageArray.count {
+                    completion(true)
+                }
+            })
         }
     }
     
